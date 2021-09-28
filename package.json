@@ -1,0 +1,29 @@
+{
+  "name": "cerberus-music",
+  "version": "0.10.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.3.3",
+    "array-move": "^3.0.1",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.3",
+    "lyrics-finder": "^21.0.5",
+    "mongoose": "^5.11.13",
+    "node-spotify-api": "^1.1.1",
+    "simple-youtube-api": "^5.1.1",
+    "soundcloud-downloader": "^0.2.3",
+    "spotify-uri": "^2.1.0",
+    "spotify-url-info": "^2.2.0",
+    "string-progressbar": "^1.0.3",
+    "ytdl-core": "^4.9.1",
+    "ytdl-core-discord": "^1.2.5",
+    "ytsr": "^3.3.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
