@@ -1,0 +1,25 @@
+name: Pull and Build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    
+jobs:
+  # This workflow contains a single job called "build" (This is also a comment. :P)
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    steps:
+      # Checks-out my repository so my job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command to build the docker image 
+      - name: Docker image build
+        run: docker build -t registry.local.wlsr.io/callisto_music .
+
+      #pushes new image to local/private repository
+      - name: Docker image push
+        run: docker push registry.local.wlsr.io/callisto_music
