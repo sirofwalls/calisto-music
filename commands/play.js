@@ -26,7 +26,7 @@ module.exports = {
     if (!channel) return message.reply(messages.play.errorNotChannel).catch(console.error);
     if (serverQueue && channel !== message.guild.me.voice.channel)
       return message
-        .reply(messages.play.errorNotInSameChannel, { user: message.client.user })
+        .reply(messages.play.errorNotInSameChannel + `${ message.client.user }`)
         .catch(console.error);
 
     if (!args.length)
