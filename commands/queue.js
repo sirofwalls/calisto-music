@@ -22,15 +22,14 @@ module.exports = {
       embeds[currentPage]
     );
 
-    // //Disabled the emojies becuase they do not work yet.
-    // try {
-    //   await queueEmbed.react("⬅️");
-    //   await queueEmbed.react("⏹");
-    //   await queueEmbed.react("➡️");
-    // } catch (error) {
-    //   console.error(error);
-    //   message.channel.send(error.message).catch(console.error);
-    // }
+    try {
+      await queueEmbed.react("⬅️");
+      await queueEmbed.react("⏹");
+      await queueEmbed.react("➡️");
+    } catch (error) {
+      console.error(error);
+      message.channel.send(error.message).catch(console.error);
+    }
 
     const filter = (reaction, user) =>
       ["⬅️", "⏹", "➡️"].includes(reaction.emoji.name) && message.author.id === user.id;
@@ -42,7 +41,7 @@ module.exports = {
           if (currentPage < embeds.length - 1) {
             currentPage++;
             queueEmbed.edit(
-              messages.queue.currentPage, { page: currentPage + 1, length: embeds.length },
+              `**${messages.queue.currentPage} ${currentPage + 1}/${embeds.length}**`,
               embeds[currentPage]
             );
           }
@@ -50,7 +49,7 @@ module.exports = {
           if (currentPage !== 0) {
             --currentPage;
             queueEmbed.edit(
-              messages.queue.currentPage, { page: currentPage + 1, length: embeds.length },
+              `**${messages.queue.currentPage} ${currentPage + 1}/${embeds.length}**`,
               embeds[currentPage]
             );
           }
@@ -74,8 +73,7 @@ function generateQueueEmbed(message, queue) {
   for (let i = 0; i < queue.length; i += 10) {
     const current = queue.slice(i, k);
     let j = i;
-    k += 10;
-
+    k += 10
     const info = current.map((track) => `${++j} - [${track.title}](${track.url})`).join("\n");
 
     const embed = new MessageEmbed()

@@ -12,7 +12,7 @@ module.exports = {
 
     if (!queue) return message.channel.send(messages.remove.errorNotQueue).catch(console.error);
     if (!canModifyQueue(message.member)) return messages.common.errorNotChannel;
-    if (!args.length) return message.reply(messages.remove.usageReply, { prefix: message.client.prefix });
+    if (!args.length) return message.reply(messages.remove.usageReply + `${prefix}remove <Queue Number>`);
 
     const arguments = args.join("");
     const songs = arguments.split(",").map((arg) => parseInt(arg));
@@ -34,7 +34,7 @@ module.exports = {
       );
     } else {
       console.log("we got the last one");
-      return message.reply(messages.remove.usageReply, { prefix: message.client.prefix });
+      return message.reply(messages.remove.usageReply + `${prefix}remove <Queue Number>`);
     }
   }
 };

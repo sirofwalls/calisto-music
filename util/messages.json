@@ -73,7 +73,7 @@
 	"remove": {
 		"description": "Remove song from the queue",
 		"errorNotQueue": "There is no queue.",
-		"usageReply": "Usage: {prefix}remove <Queue Number>",
+		"usageReply": "Usage: ",
 		"result": "<@{author}> ❌ removed **{title}** from the queue."
 	},
 	"resume": {
