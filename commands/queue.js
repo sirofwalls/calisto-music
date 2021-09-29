@@ -78,7 +78,7 @@ function generateQueueEmbed(message, queue) {
 
     const embed = new MessageEmbed()
       .setTitle(messages.queue.embedTitle)
-      .setThumbnail(message.guild.iconURL())
+      .setThumbnail(message.client.user.avatarURL())
       .setColor("#F8AA2A")
       .setDescription(
         messages.queue.embedCurrentSong + `[${ queue[0].title}](${ queue[0].url})` + `\n\n${info}\n`
