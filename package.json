@@ -24,6 +24,10 @@
     "ytsr": "^3.3.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }
