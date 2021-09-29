@@ -17,7 +17,7 @@
 		"errorNotQueue": "There is nothing playing.",
 		"embedTitle": "Now playing",
 		"live": " ◉ LIVE",
-		"timeRemaining": "Time Remaining: {time}"
+		"timeRemaining": "Time Remaining: "
 	},
 	"pause": {
 		"description": "Pause the currently playing music",
