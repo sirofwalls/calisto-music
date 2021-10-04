@@ -1,25 +1,32 @@
 const { MessageEmbed } = require("discord.js");
-const { play } = require("../include/play");
+const { play } = require("../../include/play");
 const YouTubeAPI = require("simple-youtube-api");
 const ytsr = require('ytsr');
 const { getTracks } = require('spotify-url-info');
 const scdl = require("soundcloud-downloader").default;
-const messages = require('../util/messages.json');
+const messages = require('../../util/messages.json');
 
 const {
   YOUTUBE_API_KEY,
   SOUNDCLOUD_CLIENT_ID,
   MAX_PLAYLIST_SIZE,
   DEFAULT_VOLUME
-} = require("../util/botUtil");
+} = require("../../util/botUtil");
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 
-module.exports = {
-  name: "playlist",
-  cooldown: 5,
-  aliases: ["pl"],
-  description: messages.playlist.description,
-  async execute(message, args) {
+const BaseCommand = require('../../util/structures/BaseCommand');
+
+module.exports = class PlaylistCommand extends BaseCommand {
+  constructor() {
+    super(
+    'playlist',
+    '--',
+    5,
+    ['pl'],
+    messages.playlist.description);
+  }
+
+  async run(message, args) {
     const { channel } = message.member.voice;
     const serverQueue = message.client.queue.get(message.guild.id);
 
@@ -153,7 +160,7 @@ module.exports = {
         return message.channel.send(messages.play.cantJoinChannel + `${ error }`).catch(console.error);
       }
     }
-  },
+  }
   convert(second) {
     const a = second.split(':');
     let rre
@@ -165,4 +172,4 @@ module.exports = {
 
     return rre;
   }
-};
+}

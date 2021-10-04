@@ -1,24 +1,30 @@
-const { canModifyQueue } = require("../util/botUtil");
-const messages = require('../util/messages.json');
-
+const { canModifyQueue } = require("../../util/botUtil");
+const messages = require('../../util/messages.json');
 const pattern = /^[0-9]{1,2}(\s*,\s*[0-9]{1,2})*$/;
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "remove",
-  aliases: ["rm"],
-  description: messages.remove.description,
-  execute(message, args) {
+module.exports = class RemoveCommand extends BaseCommand {
+  constructor() {
+    super(
+    'remove',
+    '--',
+    5,
+    ['rm'],
+    messages.remove.description);
+  }
+
+  async run(message, args) {
     const queue = message.client.queue.get(message.guild.id);
 
     if (!queue) return message.channel.send(messages.remove.errorNotQueue).catch(console.error);
     if (!canModifyQueue(message.member)) return messages.common.errorNotChannel;
     if (!args.length) return message.reply(messages.remove.usageReply + `${prefix}remove <Queue Number>`);
 
-    const arguments = args.join("");
-    const songs = arguments.split(",").map((arg) => parseInt(arg));
+    const argument = args.join("");
+    const songs = argument.split(",").map((arg) => parseInt(arg));
     let removed = [];
 
-    if (pattern.test(arguments)) {
+    if (pattern.test(argument)) {
       queue.songs = queue.songs.filter((item, index) => {
         if (songs.find((songIndex) => songIndex - 1 === index)) removed.push(item);
         else return true;
@@ -37,4 +43,4 @@ module.exports = {
       return message.reply(messages.remove.usageReply + `${prefix}remove <Queue Number>`);
     }
   }
-};
+}

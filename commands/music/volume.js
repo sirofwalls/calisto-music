@@ -1,11 +1,18 @@
-const { canModifyQueue } = require("../util/botUtil");
-const messages = require('../util/messages.json');
+const { canModifyQueue } = require("../../util/botUtil");
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "volume",
-  aliases: ["v"],
-  description: messages.volume.description,
-  execute(message, args) {
+module.exports = class VolumeCommand extends BaseCommand {
+  constructor() {
+    super(
+    'volume',
+    '--',
+    5,
+    ['v'],
+    messages.volume.description);
+  }
+
+  async run(message, args) {
     const queue = message.client.queue.get(message.guild.id);
 
     if (!queue) return message.reply(messages.volume.errorNotQueue).catch(console.error);
@@ -21,4 +28,4 @@ module.exports = {
     queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
     return queue.textChannel.send(messages.volume.result + `**${ args[0] }**`).catch(console.error);
   }
-};
+}

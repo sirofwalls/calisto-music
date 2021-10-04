@@ -1,13 +1,21 @@
 const { MessageEmbed } = require("discord.js");
 const YouTubeAPI = require("simple-youtube-api");
-const { YOUTUBE_API_KEY } = require("../util/botUtil");
+const { YOUTUBE_API_KEY } = require("../../util/botUtil");
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
-const messages = require('../util/messages.json');
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "search",
-  description: messages.search.description,
-  async execute(message, args) {
+module.exports = class SearchCommand extends BaseCommand {
+  constructor() {
+    super(
+    'search',
+    '--',
+    5,
+    [],
+    messages.search.description);
+  }
+
+  async run(message, args) {
     if (!args.length)
       return message
         .reply(messages.search.usageReply + `${message.client.prefix}${module.exports.name} <Video Name>` )
@@ -44,11 +52,11 @@ module.exports = {
         for (let song of songs) {
           await message.client.commands
             .get("play")
-            .execute(message, [resultsEmbed.fields[parseInt(song) - 1].name]);
+            .run(message, [resultsEmbed.fields[parseInt(song) - 1].name]);
         }
       } else {
         const choice = resultsEmbed.fields[parseInt(response.first()) - 1].name;
-        message.client.commands.get("play").execute(message, [choice]);
+        message.client.commands.get("play").run(message, [choice]);
       }
 
       message.channel.activeCollector = false;
@@ -60,4 +68,4 @@ module.exports = {
       message.reply(error.message).catch(console.error);
     }
   }
-};
+}

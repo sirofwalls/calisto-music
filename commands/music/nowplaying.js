@@ -1,12 +1,19 @@
+const BaseCommand = require('../../util/structures/BaseCommand');
 const createBar = require("string-progressbar");
 const { MessageEmbed } = require("discord.js");
-const messages = require('../util/messages.json');
+const messages = require('../../util/messages.json');
 
-module.exports = {
-  name: "nowplaying",
-  aliases: ["np"],
-  description: messages.nowplaying.description,
-  execute(message) {
+module.exports = class NowPlayingCommand extends BaseCommand {
+  constructor() {
+    super(
+    'nowplaying',
+    '--',
+    5,
+    ['np'],
+    messages.nowplaying.description);
+  }
+
+  async run(message, args) {
     const queue = message.client.queue.get(message.guild.id);
     if (!queue) return message.reply(messages.nowplaying.errorNotQueue).catch(console.error);
 
@@ -14,7 +21,7 @@ module.exports = {
     const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
     const left = song.duration - seek;
 
-    let nowPlaying = new MessageEmbed()
+    var nowPlaying = new MessageEmbed()
       .setTitle(messages.nowplaying.embedTitle)
       .setDescription(`${song.title}\n${song.url}`)
       .setColor("#F8AA2A")
@@ -37,4 +44,4 @@ module.exports = {
 
     return message.channel.send(nowPlaying);
   }
-};
+}

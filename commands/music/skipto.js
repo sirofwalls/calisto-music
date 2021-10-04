@@ -1,11 +1,18 @@
-const { canModifyQueue } = require("../util/botUtil");
-const messages = require('../util/messages.json');
+const { canModifyQueue } = require("../../util/botUtil");
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "skipto",
-  aliases: ["st"],
-  description: messages.skipto.description,
-  execute(message, args) {
+module.exports = class SkipToCommand extends BaseCommand {
+  constructor() {
+    super(
+    'skipto',
+    '--',
+    5,
+    ['st'],
+    messages.skipto.description);
+  }
+
+  async run(message, args) {
     if (!args.length || isNaN(args[0]))
       return message
         .reply(messages.skipto.usageReply + `${ message.client.prefix }${module.exports.name } <Queue Number>`)
@@ -34,4 +41,4 @@ module.exports = {
       .send(`${message.author}` + messages.skipto.result)
       .catch(console.error);
   }
-};
+}

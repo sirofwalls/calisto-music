@@ -1,12 +1,19 @@
 const { MessageEmbed } = require("discord.js");
-const messages = require('../util/messages.json');
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "queue",
-  cooldown: 5,
-  aliases: ["q"],
-  description: messages.queue.description,
-  async execute(message) {
+module.exports = class QueueCommand extends BaseCommand {
+  constructor() {
+    super(
+    'queue',
+    '--',
+    5,
+    ['q'],
+    messages.queue.description);
+  }
+
+  async run(message, args) {
+    
     const permissions = message.channel.permissionsFor(message.client.user);
     if (!permissions.has(["MANAGE_MESSAGES", "ADD_REACTIONS"]))
       return message.reply(messages.queue.missingPermissionMessage);
@@ -64,7 +71,7 @@ module.exports = {
       }
     });
   }
-};
+}
 
 function generateQueueEmbed(message, queue) {
   let embeds = [];

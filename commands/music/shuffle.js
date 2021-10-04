@@ -1,10 +1,18 @@
-const { canModifyQueue } = require("../util/botUtil");
-const messages = require('../util/messages.json');
+const { canModifyQueue } = require("../../util/botUtil");
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "shuffle",
-  description: messages.shuffle.description,
-  execute(message) {
+module.exports = class ShuffleCommand extends BaseCommand {
+  constructor() {
+    super(
+    'shuffle',
+    '--',
+    5,
+    [],
+    messages.shuffle.description);
+  }
+
+  async run(message, args) {
     const queue = message.client.queue.get(message.guild.id);
     if (!queue) return message.channel.send(messages.shuffle.errorNotQueue).catch(console.error);
     if (!canModifyQueue(message.member)) return messages.common.errorNotChannel;
@@ -18,4 +26,4 @@ module.exports = {
     message.client.queue.set(message.guild.id, queue);
     queue.textChannel.send(`${message.author}` + messages.shuffle.result).catch(console.error);
   }
-};
+}

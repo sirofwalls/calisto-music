@@ -1,11 +1,18 @@
-const { canModifyQueue } = require("../util/botUtil");
-const messages = require('../util/messages.json');
+const { canModifyQueue } = require("../../util/botUtil");
+const messages = require('../../util/messages.json');
+const BaseCommand = require('../../util/structures/BaseCommand');
 
-module.exports = {
-  name: "resume",
-  aliases: ["r"],
-  description: messages.resume.description,
-  execute(message) {
+module.exports = class ResumeCommand extends BaseCommand {
+  constructor() {
+    super(
+    'resume',
+    '--',
+    5,
+    ['r'],
+    messages.resume.description);
+  }
+
+  async run(message, args) {
     const queue = message.client.queue.get(message.guild.id);
     if (!queue) return message.reply(messages.resume.errorNotQueue).catch(console.error);
     if (!canModifyQueue(message.member)) return messages.common.errorNotChannel;
@@ -20,4 +27,4 @@ module.exports = {
 
     return message.reply(messages.resume.errorPlaying).catch(console.error);
   }
-};
+}

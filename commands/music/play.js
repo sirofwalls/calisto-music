@@ -1,12 +1,12 @@
-const { play } = require("../include/play");
+const { play } = require("../../include/play");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const scdl = require("soundcloud-downloader").default
 const https = require("https");
-const { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID } = require("../util/botUtil");
+const { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID } = require("../../util/botUtil");
 const spotifyURI = require('spotify-uri');
 const Spotify = require('node-spotify-api');
-const messages = require('../util/messages.json');
+const messages = require('../../util/messages.json');
 
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 const spotify = new Spotify({
@@ -14,12 +14,19 @@ const spotify = new Spotify({
   secret: SPOTIFY_SECRET_ID
 });
 
-module.exports = {
-  name: "play",
-  cooldown: 3,
-  aliases: ["p"],
-  description: messages.play.description,
-  async execute(message, args) {
+const BaseCommand = require('../../util/structures/BaseCommand');
+
+module.exports = class PlayCommand extends BaseCommand {
+  constructor() {
+    super(
+    'play',
+    '--',
+    5,
+    ['p'],
+    messages.play.description);
+  }
+
+  async run(message, args) {
     const { channel } = message.member.voice;
 
     const serverQueue = message.client.queue.get(message.guild.id);
@@ -52,11 +59,11 @@ module.exports = {
 
     // Start the playlist if playlist url was provided
     if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
-      return message.client.commands.get("playlist").execute(message, args);
+      return message.client.commands.get("playlist").run(message, args);
     } else if (scdl.isValidUrl(url) && url.includes("/sets/")) {
-      return message.client.commands.get("playlist").execute(message, args);
+      return message.client.commands.get("playlist").run(message, args);
     } else if (spotifyPlaylistValid) {
-      return message.client.commands.get("playlist").execute(message, args);
+      return message.client.commands.get("playlist").run(message, args);
     }
 
     if (mobileScRegex.test(url)) {
@@ -170,4 +177,4 @@ module.exports = {
       return message.channel.send(messages.play.cantJoinChannel + `${ error }`).catch(console.error);
     }
   }
-};
+}
