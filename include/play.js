@@ -7,7 +7,7 @@ module.exports = {
   async play(song, message) {
     const { SOUNDCLOUD_CLIENT_ID } = require("../util/botUtil");
 
-    let config;
+    var config;
 
     try {
       config = require("../config.json");
@@ -27,8 +27,8 @@ module.exports = {
       return message.client.queue.delete(message.guild.id);
     }
 
-    let stream = null;
-    let streamType = song.url.includes("youtube.com") ? "opus" : "ogg/opus";
+    var stream = null;
+    var streamType = song.url.includes("youtube.com") ? "opus" : "ogg/opus";
 
     try {
       if (song.url.includes("youtube.com")) {
@@ -63,7 +63,7 @@ module.exports = {
         if (queue.loop) {
           // if loop is on, push the song back at the end of the queue
           // so it can repeat endlessly
-          let lastSong = queue.songs.shift();
+          var lastSong = queue.songs.shift();
           queue.songs.push(lastSong);
           module.exports.play(queue.songs[0], message);
         } else {

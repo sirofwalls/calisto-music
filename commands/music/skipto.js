@@ -39,7 +39,7 @@ module.exports = class SkipToCommand extends BaseCommand {
           queue.playing = true;
 
           if (queue.loop) {
-            for (let i = 0; i < args[0] - 2; i++) {
+            for (var i = 0; i < args[0] - 2; i++) {
               queue.songs.push(queue.songs.shift());
             }
           } else {

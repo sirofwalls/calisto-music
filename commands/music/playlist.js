@@ -73,20 +73,21 @@ module.exports = class PlaylistCommand extends BaseCommand {
             playing: true
           };
 
-          let newSongs = null;
-          let playlist = null;
-          let videos = [];
-          let waitMessage = null;
+          var newSongs = null;
+          var playlist = null;
+          var videos = [];
+          var waitMessage = null;
+          var song = null;
 
           if (spotifyPlaylistValid) {
             try {
               waitMessage = await message.channel.send('fetching playlist...')
-              let playlistTrack = await getTracks(url);
+              var playlistTrack = await getTracks(url);
               if (playlistTrack > MAX_PLAYLIST_SIZE) {
                 playlistTrack.length = MAX_PLAYLIST_SIZE
               }
               const spotfiyPl = await Promise.all(playlistTrack.map(async (track) => {
-                let result;
+                var result;
                 const ytsrResult = await ytsr((`${track.name} - ${track.artists ? track.artists[0].name : ''}`), { limit: 1 });
                 result = ytsrResult.items[0];
                 return (song = {
@@ -143,7 +144,7 @@ module.exports = class PlaylistCommand extends BaseCommand {
 
           serverQueue ? serverQueue.songs.push(...newSongs) : queueConstruct.songs.push(...newSongs);
 
-          let playlistEmbed = new MessageEmbed()
+          var playlistEmbed = new MessageEmbed()
             .setTitle(`${playlist ? playlist.title : 'Spotify Playlist'}`)
             .setDescription(newSongs.map((song, index) => `${index + 1}. ${song.title}`))
             .setURL(playlist ? playlist.url : 'https://www.spotify.com/')
@@ -183,7 +184,7 @@ module.exports = class PlaylistCommand extends BaseCommand {
   }
   convert(second) {
     const a = second.split(':');
-    let rre
+    var rre
     if (a.length == 2) {
       rre = (+a[0]) * 60 + (+a[1])
     } else {

@@ -101,11 +101,11 @@ module.exports = class PlayCommand extends BaseCommand {
             playing: true
           };
 
-          let songInfo = null;
-          let song = null;
+          var songInfo = null;
+          var song = null;
 
           if (spotifyValid) {
-            let spotifyTitle, spotifyArtist;
+            var spotifyTitle, spotifyArtist;
             const spotifyTrackID = spotifyURI.parse(url).id
             const spotifyInfo = await spotify.request(`https://api.spotify.com/v1/tracks/${spotifyTrackID}`).catch(err => {
               return message.channel.send(`Oops... \n` + err)

@@ -27,9 +27,9 @@ module.exports = class ShuffleCommand extends BaseCommand {
           if (!queue) return message.channel.send(messages.shuffle.errorNotQueue).catch(console.error);
           if (!canModifyQueue(message.member)) return messages.common.errorNotChannel;
 
-          let songs = queue.songs;
-          for (let i = songs.length - 1; i > 1; i--) {
-            let j = 1 + Math.floor(Math.random() * i);
+          var songs = queue.songs;
+          for (var i = songs.length - 1; i > 1; i--) {
+            var j = 1 + Math.floor(Math.random() * i);
             [songs[i], songs[j]] = [songs[j], songs[i]];
           }
           queue.songs = songs;

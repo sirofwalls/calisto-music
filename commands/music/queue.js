@@ -30,7 +30,7 @@ module.exports = class QueueCommand extends BaseCommand {
           const queue = message.client.queue.get(message.guild.id);
           if (!queue) return message.channel.send(messages.queue.errorNotQueue);
 
-          let currentPage = 0;
+          var currentPage = 0;
           const embeds = generateQueueEmbed(message, queue.songs);
 
           const queueEmbed = await message.channel.send(
@@ -92,12 +92,12 @@ module.exports = class QueueCommand extends BaseCommand {
 }
 
 function generateQueueEmbed(message, queue) {
-  let embeds = [];
-  let k = 10;
+  var embeds = [];
+  var k = 10;
 
-  for (let i = 0; i < queue.length; i += 10) {
+  for (var i = 0; i < queue.length; i += 10) {
     const current = queue.slice(i, k);
-    let j = i;
+    var j = i;
     k += 10
     const info = current.map((track) => `${++j} - [${track.title}](${track.url})`).join("\n");
 

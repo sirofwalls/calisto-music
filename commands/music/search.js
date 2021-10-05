@@ -36,7 +36,7 @@ module.exports = class SearchCommand extends BaseCommand {
 
           const search = args.join(" ");
 
-          let resultsEmbed = new MessageEmbed()
+          var resultsEmbed = new MessageEmbed()
             .setTitle(messages.search.resultEmbedTtile)
             .setDescription(messages.search.resultEmbedDesc + `${search}`)
             .setColor("#F8AA2A");
@@ -45,7 +45,7 @@ module.exports = class SearchCommand extends BaseCommand {
             const results = await youtube.searchVideos(search, 10);
             results.map((video, index) => resultsEmbed.addField(video.shortURL, `${index + 1}. ${video.title}`));
 
-            let resultsMessage = await message.channel.send(resultsEmbed);
+            var resultsMessage = await message.channel.send(resultsEmbed);
 
             function filter(msg) {
               const pattern = /^[0-9]{1,2}(\s*,\s*[0-9]{1,2})*$/;
@@ -57,9 +57,9 @@ module.exports = class SearchCommand extends BaseCommand {
             const reply = response.first().content;
 
             if (reply.includes(",")) {
-              let songs = reply.split(",").map((str) => str.trim());
+              var songs = reply.split(",").map((str) => str.trim());
 
-              for (let song of songs) {
+              for (var song of songs) {
                 await message.client.commands
                   .get("play")
                   .run(message, [resultsEmbed.fields[parseInt(song) - 1].name]);

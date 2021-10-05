@@ -32,7 +32,7 @@ module.exports = class RemoveCommand extends BaseCommand {
 
             const argument = args.join("");
             const songs = argument.split(",").map((arg) => parseInt(arg));
-            let removed = [];
+            var removed = [];
 
             if (pattern.test(argument)) {
               queue.songs = queue.songs.filter((item, index) => {

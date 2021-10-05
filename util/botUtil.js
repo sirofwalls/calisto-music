@@ -9,7 +9,7 @@ exports.canModifyQueue = (member) => {
   return true;
 };
 
-let config;
+var config;
 
 try {
   config = require("../config.json");

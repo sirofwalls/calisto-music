@@ -30,7 +30,7 @@ module.exports = class BlakclistCommand extends BaseCommand {
             return message.channel.send(messages.blacklist.noBlacklisted);
         }
 
-        let datas = []
+        var datas = []
         users.forEach((data, index) => {
             datas.push(`${index++ + 1} | ${data.username} (${data.userId})`)
         })
