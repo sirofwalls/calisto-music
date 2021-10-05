@@ -23,6 +23,7 @@ module.exports = class HelpCommand extends BaseCommand {
 
     commands.forEach(cmd => {
       if(arrayCheck.includes(cmd.name)) return;
+      if(cmd.category === 'admin' || cmd.category === 'owner') return;
       arrayCheck.push(cmd.name);
 
       helpEmbed.addField(

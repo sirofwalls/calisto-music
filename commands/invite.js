@@ -5,7 +5,7 @@ module.exports = class InviteCommand extends BaseCommand {
   constructor() {
     super(
     'invite',
-    '--',
+    'owner',
     5,
     [],
     messages.invite.description);

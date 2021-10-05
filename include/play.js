@@ -83,15 +83,15 @@ module.exports = {
       var playingMessage = await queue.textChannel.send(
         messages.play.startedPlaying + `${ song.title } + ${ song.url }`
         );
-      // // Disabling the emoji functionality until i can figure out why the "resume" is not working properlys
-      await playingMessage.react("⏭");
-      await playingMessage.react("▶");
-      await playingMessage.react("⏸");
-      await playingMessage.react("🔇");
-      await playingMessage.react("🔉");
-      await playingMessage.react("🔊");
-      await playingMessage.react("🔁");
-      await playingMessage.react("⏹");
+      // // Disabling the emoji functionality... resume after pause is not working properly, and role permission needs to be added. 
+      // await playingMessage.react("⏭");
+      // await playingMessage.react("▶");
+      // await playingMessage.react("⏸");
+      // await playingMessage.react("🔇");
+      // await playingMessage.react("🔉");
+      // await playingMessage.react("🔊");
+      // await playingMessage.react("🔁");
+      // await playingMessage.react("⏹");
     } catch (error) {
       console.error(error);
     }

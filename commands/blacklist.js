@@ -8,7 +8,7 @@ module.exports = class BlakclistCommand extends BaseCommand {
   constructor() {
     super(
     'blacklist',
-    '--',
+    'admin',
     5,
     [],
     messages.blacklist.description);
