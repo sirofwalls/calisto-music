@@ -14,13 +14,13 @@ module.exports = class VolumeCommand extends BaseCommand {
   }
 
   async run(message, args) {
-    const musicRoleFetch = await GuildConfig.findOne({guildId: message.guild.id});
-    const guildRoleCheck = musicRoleFetch.get('musicRole');
+    const modRoleFetch = await GuildConfig.findOne({guildId: message.guild.id});
+    const guildRoleCheck = modRoleFetch.get('moderatorRole');
 
     if (guildRoleCheck) {
-      const musicRole = message.guild.roles.cache.find(role => role.name.toLowerCase() === musicRoleFetch.get('musicRole').toLowerCase());
-      if (musicRole) {
-        const roleCheck = message.member.roles.cache.has(musicRole.id);
+      const modRole = message.guild.roles.cache.find(role => role.name.toLowerCase() === modRoleFetch.get('moderatorRole').toLowerCase());
+      if (modRole) {
+        const roleCheck = message.member.roles.cache.has(modRole.id);
       
         if (roleCheck) {
           const queue = message.client.queue.get(message.guild.id);
