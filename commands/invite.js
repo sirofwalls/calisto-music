@@ -6,7 +6,7 @@ module.exports = class InviteCommand extends BaseCommand {
     super(
     'invite',
     'owner',
-    5,
+    60,
     [],
     messages.invite.description);
   }
@@ -14,7 +14,7 @@ module.exports = class InviteCommand extends BaseCommand {
   async run(message, args) {
     return message.member
       .send(
-        `https://discord.com/oauth2/authorize?client_id=${message.client.user.id}&permissions=70282305&scope=bot
+        `https://discord.com/oauth2/authorize?client_id=${message.client.user.id}&permissions=338717761&scope=bot
     `
       )
       .catch(console.error);
