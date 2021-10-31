@@ -7,7 +7,7 @@ module.exports = {
   async play(song, message) {
     const { SOUNDCLOUD_CLIENT_ID } = require("../util/botUtil");
 
-    let config;
+    var config;
 
     try {
       config = require("../config.json");
@@ -27,8 +27,8 @@ module.exports = {
       return message.client.queue.delete(message.guild.id);
     }
 
-    let stream = null;
-    let streamType = song.url.includes("youtube.com") ? "opus" : "ogg/opus";
+    var stream = null;
+    var streamType = song.url.includes("youtube.com") ? "opus" : "ogg/opus";
 
     try {
       if (song.url.includes("youtube.com")) {
@@ -63,7 +63,7 @@ module.exports = {
         if (queue.loop) {
           // if loop is on, push the song back at the end of the queue
           // so it can repeat endlessly
-          let lastSong = queue.songs.shift();
+          var lastSong = queue.songs.shift();
           queue.songs.push(lastSong);
           module.exports.play(queue.songs[0], message);
         } else {
@@ -83,7 +83,7 @@ module.exports = {
       var playingMessage = await queue.textChannel.send(
         messages.play.startedPlaying + `${ song.title } + ${ song.url }`
         );
-      // // Disabling the emoji functionality until i can figure out why the "resume" is not working properlys
+      // // Disabling the emoji functionality... resume after pause is not working properly, and role permission needs to be added. 
       // await playingMessage.react("⏭");
       // await playingMessage.react("▶");
       // await playingMessage.react("⏸");
@@ -111,7 +111,7 @@ module.exports = {
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return messages.common.errorNotChannel;
           queue.connection.dispatcher.end();
-          queue.textChannel.send(`${ author.user }` + messages.play.skipSong).catch(console.error);
+          queue.textChannel.send(`${ user }` + messages.play.skipSong).catch(console.error);
           collector.stop();
           break;
 
@@ -121,9 +121,9 @@ module.exports = {
           if (queue.playing) {
             queue.playing = !queue.playing;
             queue.connection.dispatcher.pause();
-            queue.textChannel.send(`${ author.user }` + messages.play.pauseSong).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.pauseSong).catch(console.error);
           } else {
-            queue.textChannel.send(`${ author.user }` + messages.play.alreadyPaused).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.alreadyPaused).catch(console.error);
           }
           break;
 
@@ -133,9 +133,9 @@ module.exports = {
           if (!queue.playing){
             queue.playing = !queue.playing;
             queue.connection.dispatcher.resume();
-            queue.textChannel.send(`${ author.user }` + messages.play.resumeSong).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.resumeSong).catch(console.error);
           } else {
-            queue.textChannel.send(`${ author.user }` + messages.play.stillPlaying).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.stillPlaying).catch(console.error);
           }
           break;
 
@@ -145,11 +145,11 @@ module.exports = {
           if (queue.volume <= 0) {
             queue.volume = 100;
             queue.connection.dispatcher.setVolumeLogarithmic(100 / 100);
-            queue.textChannel.send(`${ author.user }` + messages.play.unmutedSong).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.unmutedSong).catch(console.error);
           } else {
             queue.volume = 0;
             queue.connection.dispatcher.setVolumeLogarithmic(0);
-            queue.textChannel.send(`${ author.user }` + messages.play.mutedSong).catch(console.error);
+            queue.textChannel.send(`${ user }` + messages.play.mutedSong).catch(console.error);
           }
           break;
 
@@ -161,7 +161,7 @@ module.exports = {
           else queue.volume = queue.volume - 10;
           queue.connection.dispatcher.setVolumeLogarithmic(queue.volume / 100);
           queue.textChannel
-            .send(`${ author.user }` + messages.play.decreasedVolume + `${queue.volume}%`)
+            .send(`${ user }` + messages.play.decreasedVolume + `${queue.volume}%`)
             .catch(console.error);
           break;
 
@@ -173,7 +173,7 @@ module.exports = {
           else queue.volume = queue.volume + 10;
           queue.connection.dispatcher.setVolumeLogarithmic(queue.volume / 100);
           queue.textChannel
-            .send(`${ author.user }` + messages.play.increasedVolume + `${queue.volume}%`)
+            .send(`${ user }` + messages.play.increasedVolume + `${queue.volume}%`)
             .catch(console.error);
           break;
 
@@ -183,7 +183,7 @@ module.exports = {
           queue.loop = !queue.loop;
           queue.textChannel
             .send(
-              `${ author.user }` + messages.play.loopSong + `${queue.loop ? messages.common.on : messages.common.off}`
+              `${ user }` + messages.play.loopSong + `${queue.loop ? messages.common.on : messages.common.off}`
             )
             .catch(console.error);
           break;
@@ -192,7 +192,7 @@ module.exports = {
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return messages.common.errorNotChannel;
           queue.songs = [];
-          queue.textChannel.send(`${ author.user }` + messages.play.stopSong,).catch(console.error);
+          queue.textChannel.send(`${ user }` + messages.play.stopSong,).catch(console.error);
           try {
             queue.connection.dispatcher.end();
           } catch (error) {
