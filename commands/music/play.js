@@ -3,7 +3,7 @@ const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const scdl = require("soundcloud-downloader").default
 const https = require("https");
-const { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID } = require("../../util/botUtil");
+const { YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, DEFAULT_VOLUME, SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID, PREFIX } = require("../../util/botUtil");
 const spotifyURI = require('spotify-uri');
 const Spotify = require('node-spotify-api');
 const messages = require('../../util/messages.json');
@@ -47,7 +47,7 @@ module.exports = class PlayCommand extends BaseCommand {
 
           if (!args.length)
             return message
-              .reply(messages.play.usageReply + `${ prefix }play <YouTube URL | Video Name | Soundcloud URL | Spotify URL> }`)
+              .reply(messages.play.usageReply + `${ PREFIX }play <YouTube URL -or- Video Name>`)
               .catch(console.error);
 
           const permissions = channel.permissionsFor(message.client.user);
