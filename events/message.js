@@ -26,7 +26,7 @@ constructor() {
         
         const command =
             client.commands.get(commandName) ||
-            client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName)).catch(err => console.log(err));
+            client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName)).catch(err => console.log(`There was an error \n${err}`));
         
         if (!command) return;        
         
