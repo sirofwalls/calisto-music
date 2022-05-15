@@ -1,3 +1,3 @@
 calisto-music
 
-v1.6.001
+A music bot for the gaming community known as GhostKnife of Callisto. 
