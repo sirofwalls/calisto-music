@@ -30,6 +30,6 @@
     "dev": "nodemon index.js"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.21"
   }
 }
