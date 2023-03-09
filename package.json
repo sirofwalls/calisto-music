@@ -13,7 +13,7 @@
     "ffmpeg-static": "^4.2.3",
     "fs": "*",
     "lyrics-finder": "^21.0.5",
-    "mongoose": "^5.13.14",
+    "mongoose": "^5.13.15",
     "node-spotify-api": "^1.1.1",
     "path": "^0.12.7",
     "simple-youtube-api": "^5.1.1",
