@@ -1,5 +1,5 @@
 // Module Imports
-const { Client } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const { readdirSync } = require("fs");
 const { join } = require("path");
 const path = require("path");
@@ -9,7 +9,8 @@ const mongoDB = require('mongoose');
 
 const client = new Client({
   disableMentions: "everyone",
-  restTimeOffset: 0
+  restTimeOffset: 0,
+  ws: {intents: Intents.ALL}
 });
 if (MONGODB_URI) {
   const db = mongoDB.connect(MONGODB_URI, {
@@ -30,6 +31,8 @@ client.queue = new Map();
  */
 client.on("warn", (info) => console.log(info));
 client.on("error", console.error);
+
+client.on('debug', console.debug);
 
 (async () => {
   client.commands = new Map();
