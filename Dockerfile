@@ -1,4 +1,4 @@
-FROM node:16.14.2-stretch
+FROM node:14.16.1-stretch
 # This version is needed or the library for play/pause/resume breaks on pausing. 
 
 WORKDIR /usr/nodeapp
