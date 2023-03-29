@@ -161,7 +161,11 @@ module.exports = class PlayCommand extends BaseCommand {
               };
             } catch (error) {
               console.error(error);
-              return message.reply(error.message).catch(console.error);
+              if (error && error.statusCode === 410) {
+                return message.reply('That song is currently age restricted, and I am only 3 years old. Please try another song. Sorry!')
+              } else {
+                return message.reply(error.message).catch(console.error);
+              }
             }
           }
 

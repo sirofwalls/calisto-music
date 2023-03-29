@@ -32,7 +32,7 @@ client.queue = new Map();
 client.on("warn", (info) => console.log(info));
 client.on("error", console.error);
 
-client.on('debug', console.debug);
+//client.on('debug', console.debug);
 
 (async () => {
   client.commands = new Map();
